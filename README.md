@@ -95,7 +95,7 @@ Now, let's connect the frontend to your newly deployed backend.
 
 1. **Update the Worker URL**:  
    * Open the frontend/index.html file in a text editor.  
-   * Find the JavaScript constant named WORKER\_URL.  
+   * Find the JavaScript constant named ```WORKER\_URL```.  
    * Replace the placeholder URL with the URL of your deployed worker from the previous step.
 
 // Find this line in frontend/index.html  
@@ -111,7 +111,7 @@ const WORKER\_URL \= '\[https://your-worker-name.your-subdomain.workers.dev/api/
    * Drag and drop the frontend/index.html file into the upload area.  
    * Click **Deploy site**.
 
-Cloudflare will give you a public URL for your frontend (e.g., https://cover-letter-genius.pages.dev). You're now live\!
+Cloudflare will give you a public URL for your frontend (e.g., ```https://cover-letter-genius.pages.dev```). You're now live\!
 
 ## **kullanım**
 
@@ -129,9 +129,9 @@ Cloudflare will give you a public URL for your frontend (e.g., https://cover-let
 Contributions are welcome\! Please feel free to fork the repository, make your changes, and submit a pull request.
 
 1. Fork the repository.  
-2. Create your feature branch (git checkout \-b feature/AmazingFeature).  
-3. Commit your changes (git commit \-m 'Add some AmazingFeature').  
-4. Push to the branch (git push origin feature/AmazingFeature).  
+2. Create your feature branch ```(git checkout \-b feature/AmazingFeature). ``` 
+3. Commit your changes ```(git commit \-m 'Add some AmazingFeature').  ```
+4. Push to the branch ```(git push origin feature/AmazingFeature).  ```
 5. Open a Pull Request.
 
 ## **📄 License**
