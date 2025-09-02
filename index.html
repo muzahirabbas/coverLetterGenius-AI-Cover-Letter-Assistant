@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover Letter Genius</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #0a0a0a; 
+            --secondary-color: #666; 
+            --bg-color: #ffffff;
+            --accent-color: #007aff; 
+            --border-color: #e5e5e5; 
+            --surface-color: #f5f5f7;
+        }
+
+        body[data-theme="dark"] {
+            --primary-color: #f2f2f7;
+            --secondary-color: #8e8e93;
+            --bg-color: #1c1c1e;
+            --border-color: #3a3a3c;
+            --surface-color: #0a0a0a;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--surface-color); 
+            color: var(--primary-color);
+            margin: 0; 
+            padding: 2rem; 
+            display: flex; 
+            justify-content: center; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container { max-width: 800px; width: 100%; }
+        header { 
+            text-align: center; 
+            margin-bottom: 2.5rem; 
+            position: relative; 
+        }
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+        }
+        h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
+        h1 span { color: var(--accent-color); }
+        p { color: var(--secondary-color); font-size: 1.1rem; }
+        form { 
+            background: var(--bg-color); 
+            border-radius: 12px; 
+            padding: 2rem; 
+            border: 1px solid var(--border-color); 
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .input-group { margin-bottom: 1.5rem; }
+        .optional-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        label { display: block; font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        input[type="text"], input[type="email"], input[type="password"], textarea, input[type="file"], select { width: 100%; box-sizing: border-box; font-size: 1rem; color: var(--primary-color); }
+        input[type="text"], input[type="email"], input[type="password"], textarea, select {
+            padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color);
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s;
+            background-color: var(--bg-color);
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus, select:focus { 
+            outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2); 
+        }
+        textarea { min-height: 150px; resize: vertical; }
+        .help-text { font-size: 0.8rem; color: var(--secondary-color); margin-top: 0.5rem; }
+        .help-text a { color: var(--accent-color); text-decoration: none; }
+        .help-text a:hover { text-decoration: underline; }
+        button { width: 100%; padding: 1rem; font-size: 1.1rem; font-weight: 500; background-color: var(--accent-color); color: white; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        button:disabled { background-color: #999; cursor: not-allowed; }
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.3); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Dark Mode Toggle Styles */
+        #theme-toggle {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="title-container">
+                <h1>Cover Letter <span>Genius</span> ✨</h1>
+                <button id="theme-toggle">☀️</button>
+            </div>
+            <p>Just provide your CV, job details, and let AI handle the rest.</p>
+        </header>
+
+        <form id="coverLetterForm">
+             <div class="input-group">
+                <label for="geminiApiKey">Your Gemini API Key</label>
+                <input type="password" id="geminiApiKey" name="geminiApiKey" placeholder="Enter your Google AI API key" required>
+                <p class="help-text">You can get your free Gemini API key from <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="modelName">Select AI Model</label>
+                <select id="modelName" name="modelName">
+                    <option value="gemini-2.5-flash">Gemini 2.5 Flash (Faster)</option>
+                    <option value="gemini-2.5-pro">Gemini 2.5 Pro (Most Powerful)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="resume">Upload Your CV / Resume (.pdf)</label>
+                <input type="file" id="resume" name="resume" accept=".pdf" required>
+                 <p class="help-text">Your name, email, and location will be extracted automatically. You can override them below if needed.</p>
+            </div>
+
+             <div class="input-group optional-fields">
+                <div>
+                    <label for="fullName">Full Name (Optional)</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Override name from CV">
+                </div>
+                <div>
+                    <label for="email">Email (Optional)</label>
+                    <input type="email" id="email" name="email" placeholder="Override email from CV">
+                </div>
+                 <div>
+                    <label for="address">Location (Optional)</label>
+                    <input type="text" id="address" name="address" placeholder="e.g., San Francisco, CA">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="jobDescription">Job Description</label>
+                <textarea id="jobDescription" name="jobDescription" placeholder="Paste the full job description here..." required></textarea>
+            </div>
+            <div class="input-group">
+                <label for="companyInfo">Company Information / Why you want to work there</label>
+                <textarea id="companyInfo" name="companyInfo" placeholder="Mention their mission, recent projects, company culture, etc." required></textarea>
+            </div>
+            
+            <button type="submit" id="generateButton">
+                <span id="button-text">Generate Cover Letter</span>
+                <div id="spinner" class="spinner" style="display: none;"></div>
+            </button>
+        </form>
+    </div>
+
+<script>
+    const WORKER_URL = 'YOUR_WORKER_URL_HERE/api/generate';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`;
+
+    const form = document.getElementById('coverLetterForm');
+    const generateButton = document.getElementById('generateButton');
+    const buttonText = document.getElementById('button-text');
+    const spinner = document.getElementById('spinner');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        generateButton.disabled = true;
+        buttonText.textContent = 'Analyzing CV...';
+        spinner.style.display = 'block';
+
+        try {
+            const resumeText = await extractTextFromPdf(document.getElementById('resume').files[0]);
+            
+            const payload = {
+                resumeText: resumeText,
+                geminiApiKey: document.getElementById('geminiApiKey').value,
+                modelName: document.getElementById('modelName').value,
+                jobDescription: document.getElementById('jobDescription').value,
+                companyInfo: document.getElementById('companyInfo').value,
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value
+            };
+            
+            buttonText.textContent = 'Generating...';
+
+            const response = await fetch(WORKER_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.details || errorData.error || 'Failed to generate PDF.');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Cover-Letter-Genius.pdf';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred: ' + error.message);
+        } finally {
+            generateButton.disabled = false;
+            buttonText.textContent = 'Generate Cover Letter';
+            spinner.style.display = 'none';
+        }
+    });
+
+    async function extractTextFromPdf(file) {
+      if (!file) {
+        throw new Error("Please select a CV file.");
+      }
+      const fileReader = new FileReader();
+      return new Promise((resolve, reject) => {
+          fileReader.onload = async function() {
+              const typedarray = new Uint8Array(this.result);
+              try {
+                  const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                  let fullText = '';
+                  for (let i = 1; i <= pdf.numPages; i++) {
+                      const page = await pdf.getPage(i);
+                      const textContent = await page.getTextContent();
+                      fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+                  }
+                  resolve(fullText);
+              } catch (error) {
+                  reject(new Error("Could not parse the PDF file."));
+              }
+          };
+          fileReader.onerror = reject;
+          fileReader.readAsArrayBuffer(file);
+      });
+    }
+
+    // --- DARK MODE TOGGLE SCRIPT ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Apply the saved theme on page load
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    body.dataset.theme = savedTheme;
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+
+    themeToggle.addEventListener('click', () => {
+        let currentTheme = body.dataset.theme;
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        body.dataset.theme = newTheme;
+        themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        localStorage.setItem('theme', newTheme);
+    });
+</script>
+
+</body>
+</html>
