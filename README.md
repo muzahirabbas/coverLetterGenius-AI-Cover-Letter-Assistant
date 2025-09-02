@@ -53,30 +53,40 @@ Follow these steps to set up the project and deploy your own version.
 1. **Node.js & npm**: Ensure you have Node.js and npm installed.  
 2. **Cloudflare Account**: [Sign up for a free Cloudflare account](https://www.google.com/search?q=https://dash.cloudflare.com/sign-up).  
 3. **Wrangler CLI**: The command-line tool for Cloudflare Workers. Install it globally:  
-```   npm install \-g wrangler```
+```
+npm install \-g wrangler
+```
 
-4. **Google Gemini API Key**: Get a free API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+5. **Google Gemini API Key**: Get a free API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
 ### **1\. Backend Setup (Cloudflare Worker)**
 
 First, let's deploy the serverless backend.
 
 1. **Clone the Repository**:  
-   ```git clone \<your-repo-url\>  ```
-  ``` cd cover-letter-genius/backend```
+  ```
+  git clone \<your-repo-url\>
+  cd cover-letter-genius/backend
+  ```
 
-2. **Install Dependencies**:  
-   ```npm install```
+3. **Install Dependencies**:  
+   ```
+   npm install
+   ```
 
-3. Authenticate Wrangler:  
+5. Authenticate Wrangler:  
    Log in to your Cloudflare account to authorize the Wrangler CLI.  
-   ```wrangler login```
+   ```
+   wrangler login
+   ```
 
-4. Deploy the Worker:  
+7. Deploy the Worker:  
    This command will build and deploy your worker to the Cloudflare network.  
-  ```wrangler deploy```
+  ```
+  wrangler deploy
+  ```
 
-5. Get Your Worker URL:  
+9. Get Your Worker URL:  
    After a successful deployment, Wrangler will output your worker's URL. It will look something like this: https://your-worker-name.your-subdomain.workers.dev. Copy this URL, as you'll need it for the frontend.
 
 ### **2\. Frontend Setup & Deployment**
@@ -89,7 +99,9 @@ Now, let's connect the frontend to your newly deployed backend.
    * Replace the placeholder URL with the URL of your deployed worker from the previous step.
 
 // Find this line in frontend/index.html  
-```const WORKER\_URL \= '\[https://your-worker-name.your-subdomain.workers.dev/api/generate\](https://your-worker-name.your-subdomain.workers.dev/api/generate)';```
+```
+const WORKER\_URL \= '\[https://your-worker-name.your-subdomain.workers.dev/api/generate\](https://your-worker-name.your-subdomain.workers.dev/api/generate)';
+```
 
 2. Deploy the Frontend (Using Cloudflare Pages):  
    The easiest way to host the index.html file is with Cloudflare Pages.  
